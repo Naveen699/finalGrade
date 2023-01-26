@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h2> Assignments </h2>
+
+
+
+<table class="tg">
+<thead>
+  <tr>
+    <th bgcolor='#CA0000 '><b>Assignment Name</b></th>
+    <th bgcolor='#CA0000 '><b>Due Date</b></th>
+    <th bgcolor='#CA0000 '><b>Grade</b></th>
+  </tr>
+</thead>
+<tbody>
+  {%for i in range(0, amount)%}
+  <tr>
+    <td class="tg-0lax">{{account[i]['assignment_name']}}</td>
+    <td class="tg-0lax">{{account[i]['due_date']}}</td>
+    <td class="tg-0lax">{{account[i]['grade']}}</td>
+  </tr>
+  {%endfor%}
+</tbody>
+</table>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
+.tg td{border-color:gray;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:15px;
+  overflow:hidden;padding:10px 30px;word-break:normal;}
+.tg th{border-color:gray;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:15px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+
+
+
+
+{% endblock %}
