@@ -145,9 +145,50 @@ body.loggedin {
       padding: 5px;
       margin: 0 0 10px 0;
 }
+
 table, th, td {
 border-spacing: 30px;
 border: 1px solid black;
+}
+
+.student-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.student-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.student-table th,
+.student-table td {
+    padding: 12px 15px;
+}
+
+.student-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.student-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.student-table tbody tr:last-of-type {
+    border-bottom: 2px solid #964545;
+}
+
+.student-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
 }
 
 .table a {
