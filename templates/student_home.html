@@ -17,7 +17,7 @@
     <tr>
       <th bgcolor='#CA0000 '><b>Class</b></th>
       <th bgcolor='#CA0000 '><b>Teacher</b></th>
-      
+      <th bgcolor='#CA0000 '><b>Grade</b></th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +25,7 @@
     <tr>
       <td class="tg-0lax"><a href="{{url_for('view_student_assignments', class_name=account[i]['class_name'])}}">{{account[i]['class_name']}}</a></td>
       <td class="tg-0lax"> {{account[i]['first_name']}}, {{account[i]['last_name']}}</td>
+      <td class="tg-0lax"> {{account[i]['grade']}}</td>
     </tr>
     {%endfor%}
   </tbody>

@@ -44,7 +44,7 @@ def student_home():
 		name = session.get('name', None)
 		student_id = session.get('current_id', None)
 		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-		cursor.execute(r"SELECT classes.class_name, teachers.first_name, teachers.last_name FROM classes JOIN teachers ON classes.teacher_id = teachers.teacher_id JOIN students ON students.student_id = '{}' WHERE students.student_id = '{}';".format(student_id, student_id))
+		cursor.execute(r"SELECT classes.class_name, teachers.first_name, teachers.last_name, student_classes.grade FROM classes JOIN teachers ON classes.teacher_id = teachers.teacher_id JOIN student_classes ON classes.class_id = student_classes.class_id WHERE student_classes.student_id = '{}';".format(student_id))
 		account = cursor.fetchall()
 		cursor.execute(r"SELECT COUNT(*) FROM student_classes WHERE student_id ={}".format(student_id))
 		account1 = cursor.fetchone()
