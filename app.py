@@ -39,6 +39,11 @@ def login():
 
     return render_template('login.html')
 
+@app.route("/testRoute")
+def testRoute():
+	return "yes"
+
+
 @app.route('/student_home')
 def student_home():
 	from userFunctions import db
@@ -46,8 +51,9 @@ def student_home():
 		name = session.get('name', None)
 		student_id = session.get('current_id', None)
 		re = db()
-		account = re.findUserClasses(1)
-		account1 = re.countUserClasses(1)
+		re.updateUserGrades(student_id)
+		account = re.findUserClasses(student_id)
+		account1 = re.countUserClasses(student_id)
 		return render_template('student_home.html', name = name, account = account, account1 = account1)
 	else:
 		return redirect(url_for('login'))
@@ -72,7 +78,6 @@ def teacher_login():
 
 @app.route('/view_student_assignments')
 def view_student_assignments():
-
 	if 'loggedin' in session:
 		class_name = request.args.get('class_name', None)
 		student_id = session.get('current_id', None)
@@ -108,14 +113,6 @@ def logout():
 	session.pop('name', None)
 	session.pop('loggedin', None)
 	return redirect(url_for('login'))
-
-# @app.route('/home')
-# def home():
-# 	if 'loogedin' in session:
-# 		return 'home'
-# 	else:
-# 		return redirect(url_for('login'))
-
 
 
 
