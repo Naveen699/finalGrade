@@ -3,7 +3,7 @@ from app import mysql
 import MySQLdb.cursors
 
 
-class db:
+class studentFunctions:
 	def __init__(self):
 		self.cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 		self.updateConnection = MySQLdb.connect("us-cdbr-east-06.cleardb.net", "b3b957a90e179c", "695f9180", "heroku_3d330f55efec1ed")
@@ -51,6 +51,49 @@ class db:
 
 			#Resets Average
 			avg = 0
+
+class teacherFunctions:
+	def __init__(self):
+		self.cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+		self.updateConnection = MySQLdb.connect("us-cdbr-east-06.cleardb.net", "b3b957a90e179c", "695f9180", "heroku_3d330f55efec1ed")
+
+
+	def returnAllClasses(self, teacher_id):
+		self.cursor.execute("SELECT * FROM classes WHERE teacher_id = '{}'".format(teacher_id))
+		return self.cursor.fetchall()
+
+	def returnIdFromName(self, class_name):
+		self.cursor.execute(r"SELECT class_id FROM classes WHERE class_name='{}'".format(class_name))
+		return self.cursor.fetchone()
+	
+	def returnStudentsInClass(self, class_id):
+		# return all students in specific class
+		return None
+
+	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
+		# Add assignment logic, apply to all students in class
+		class_id = self.returnIdFromName(class_name)
+		confirmExecute = self.updateConnection.cursor()
+		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date) SELECT MAX(assignment_id) + 1, '{}', '{}', '{}' FROM assignments;".format(class_id['class_id'], assignment_name, due_date))
+		self.updateConnection.commit()
+
+	
+		return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

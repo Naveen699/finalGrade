@@ -4,20 +4,33 @@
 
 {% block content %}
 <h2>Home Page</h2>
-<p>Welcome back, Teacher </p>
+<p>Add Assignment </p>
+
+<form action="/sumbitAddedAssignment" method="post">
+  <select name="selected_value">
+    {%for i in range(0, amount)%}
+    <option value="{{account[i]['class_name']}}">{{account[i]['class_name']}}</option>
+    {%endfor%}
+  </select>
+  <br><br>
+  <input type="text" name="assignmentName" placeholder="Assignment Name">
+  <br><br>
+  <input type="text" name="dueDate" placeholder="Due Date">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
 
 
 
-
-
-<style type="text/css">
+<!-- <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
 .tg td{border-color:gray;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:15px;
   overflow:hidden;padding:10px 30px;word-break:normal;}
 .tg th{border-color:gray;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:15px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg .tg-0lax{text-align:left;vertical-align:top}
-</style>
+</style> -->
+
 
 
 
