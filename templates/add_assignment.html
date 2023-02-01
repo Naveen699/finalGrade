@@ -6,20 +6,60 @@
 <h2>Home Page</h2>
 <p>Add Assignment </p>
 
-<form action="/sumbitAddedAssignment" method="post">
-  <select name="selected_value">
-    {%for i in range(0, amount)%}
-    <option value="{{account[i]['class_name']}}">{{account[i]['class_name']}}</option>
-    {%endfor%}
-  </select>
-  <br><br>
-  <input type="text" name="assignmentName" placeholder="Assignment Name">
-  <br><br>
-  <input type="text" name="dueDate" placeholder="Due Date">
-  <br><br>
-  <input type="submit" value="Submit">
-</form>
+<div style="border: 1px solid black; padding: 10px;">
+  <form action="/sumbitAddedAssignment" method="post">
+    <select name="selected_value">
+      {%for i in range(0, amount)%}
+      <option value="{{account[i]['class_name']}}">{{account[i]['class_name']}}</option>
+      {%endfor%}
+    </select>
+    <br><br>
+    <input type="text" name="assignmentName" placeholder="Assignment Name">
+    <br><br>
+    <input type="text" name="dueDate" placeholder="Due Date">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+</div>
 
+<style type="text/css">
+/*
+input {
+  margin: 0.25em 0em 1em 0em;
+  outline: none;
+  padding: 0.5em;
+  border: none;
+  background-color: rgb(225, 225, 225);
+  border-radius: 0.25em;
+  color: black;
+}
+*/
+form {
+    width: 300px;
+    margin: 0 auto;
+    border: 1px solid rgba(214, 21, 21, 0.724);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  select,
+  input[type="text"],
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+  }
+
+  input[type="submit"] {
+    background-color: #c52727;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+  }
+
+</style>
 
 
 <!-- <style type="text/css">

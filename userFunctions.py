@@ -68,7 +68,14 @@ class teacherFunctions:
 	
 	def returnStudentsInClass(self, class_id):
 		# return all students in specific class
-		return None
+		self.cursor.execute(r"SELECT students.* FROM students JOIN student_classes ON students.student_id = student_classes.student_id WHERE student_classes.class_id = '{}';".format(class_id))
+		return self.cursor.fetchall()
+		
+	
+	def returnStudentsFromTeacher(self, teacher_id):
+		# return all students in specific class
+		self.cursor.execute(r"SELECT students.first_name, students.last_name, student_classes.class_id FROM students JOIN student_classes ON students.student_id = student_classes.student_id JOIN classes ON student_classes.class_id = classes.class_id WHERE classes.teacher_id = '{}';".format(teacher_id))
+		return self.cursor.fetchall()
 
 	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
 		# Add assignment logic, apply to all students in class

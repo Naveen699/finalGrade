@@ -96,7 +96,9 @@ def teacher_home():
 		teacher_id = session.get("current_id", None)
 		re = teacherFunctions()
 		data= re.returnAllClasses(teacher_id)
-		return render_template('teacher_home.html', data=data)
+		data1 = re.returnStudentsFromTeacher(teacher_id)
+		print(data)
+		return render_template('teacher_home.html', data=data, data1=data1)
 	#return render_template("teacher_home.html")
 	else:
 		return redirect(url_for('teacher_login'))
