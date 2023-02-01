@@ -132,8 +132,21 @@ def profile():
 	password = session.get('password', None)
 	return render_template("profile.html", name = name, password = password)
 	
+@app.route('/view_assignments_from_teacher')
+def view_assignments_from_teacher():
+	from userFunctions import teacherFunctions, studentFunctions
+	re = teacherFunctions()
+	de = studentFunctions()
+	student_id = request.args.get('student_id', None)
+	class_id = request.args.get('class_id', None)
+	class_name = re.returnNameFromId(class_id)
+	class_name = str(class_name['class_name'])
+	
+	classD = de.findUserAssignments(student_id, class_name)
+	amount = len(classD)
+	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount)
 
-
+	return 'success' 
 @app.route('/logout')
 def logout():
 	session.pop('name', None)

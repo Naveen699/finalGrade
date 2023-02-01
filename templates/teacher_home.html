@@ -11,29 +11,43 @@
   <thead>
     <tr>
       <th bgcolor='#CA0000 '><b>{{data[i]['class_name']}}</b></th>
-
     </tr>
   </thead>
   <tbody>
     <tr>
       {%for k in range(0, bb)%}
         {%if data1[i]['class_id'] == data[i]['class_id']%}
-          <td class="tg-0lax">{{data1[k]['first_name']}} </tr>
+          <td class="tg-0lax"><a href="{{url_for('view_assignments_from_teacher', student_id = data1[k]['student_id'], class_id=data1[k]['class_id'])}}">{{data1[k]['first_name']}} </a></tr>
         {%endif%}
       {%endfor%}
   </tbody>
   </table>
-  {%endfor%}
-
+{%endfor%}
 
 
 <style type="text/css">
+/*
 .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
 .tg td{border-color:gray;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:15px;
   overflow:hidden;padding:10px 30px;word-break:normal;}
 .tg th{border-color:gray;border-style:solid;border-width:2px;font-family:Arial, sans-serif;font-size:15px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg .tg-0lax{text-align:left;vertical-align:top}
+*/
+
+.bordered-tab-contents > .tab-content > .tab-pane {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0px 0px 5px 5px;
+    padding: 10px;
+}
+
+.bordered-tab-contents > .nav-tabs {
+    margin-bottom: 0;
+}
+
+
 </style>
 
 

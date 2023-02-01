@@ -25,6 +25,7 @@ class studentFunctions:
 		self.cursor.execute(r"SELECT COUNT(*) FROM student_classes WHERE student_id ={}".format(student_id))
 		account1 = self.cursor.fetchone()
 		return int(account1['COUNT(*)'])
+	
 
 	def testUpdate(self, student_id, class_id, updateValue):
 		confirmExecute = self.updateConnection.cursor()
@@ -65,6 +66,11 @@ class teacherFunctions:
 	def returnIdFromName(self, class_name):
 		self.cursor.execute(r"SELECT class_id FROM classes WHERE class_name='{}'".format(class_name))
 		return self.cursor.fetchone()
+
+	def returnNameFromId(self, class_id):
+		self.cursor.execute(r"SELECT class_name FROM classes WHERE class_id='{}'".format(class_id))
+		return self.cursor.fetchone()
+
 	
 	def returnStudentsInClass(self, class_id):
 		# return all students in specific class
@@ -74,7 +80,7 @@ class teacherFunctions:
 	
 	def returnStudentsFromTeacher(self, teacher_id):
 		# return all students in specific class
-		self.cursor.execute(r"SELECT students.first_name, students.last_name, student_classes.class_id FROM students JOIN student_classes ON students.student_id = student_classes.student_id JOIN classes ON student_classes.class_id = classes.class_id WHERE classes.teacher_id = '{}';".format(teacher_id))
+		self.cursor.execute(r"SELECT students.student_id, students.first_name, students.last_name, student_classes.class_id FROM students JOIN student_classes ON students.student_id = student_classes.student_id JOIN classes ON student_classes.class_id = classes.class_id WHERE classes.teacher_id = '{}';".format(teacher_id))
 		return self.cursor.fetchall()
 
 	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
