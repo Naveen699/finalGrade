@@ -6,7 +6,24 @@
 <h2>Home Page</h2>
 <p>Welcome back, Teacher </p>
 
+{%for i in range(0, aa)%}
+<table class="student-table">
+  <thead>
+    <tr>
+      <th bgcolor='#CA0000 '><b>{{data[i]['class_name']}}</b></th>
 
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {%for k in range(0, bb)%}
+        {%if data1[i]['class_id'] == data[i]['class_id']%}
+          <td class="tg-0lax">{{data1[k]['first_name']}} </tr>
+        {%endif%}
+      {%endfor%}
+  </tbody>
+  </table>
+  {%endfor%}
 
 
 

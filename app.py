@@ -97,8 +97,11 @@ def teacher_home():
 		re = teacherFunctions()
 		data= re.returnAllClasses(teacher_id)
 		data1 = re.returnStudentsFromTeacher(teacher_id)
-		print(data)
-		return render_template('teacher_home.html', data=data, data1=data1)
+		aa = len(data)
+		bb = len(data1)
+		print(data[0]['class_id'])
+		print(data1)
+		return render_template('teacher_home.html', data=data, data1=data1, aa=aa, bb=bb)
 	#return render_template("teacher_home.html")
 	else:
 		return redirect(url_for('teacher_login'))
