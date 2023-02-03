@@ -74,14 +74,27 @@ class teacherFunctions:
 	
 	def returnStudentsInClass(self, class_id):
 		# return all students in specific class
-		self.cursor.execute(r"SELECT students.* FROM students JOIN student_classes ON students.student_id = student_classes.student_id WHERE student_classes.class_id = '{}';".format(class_id))
+		self.cursor.execute("SELECT students.student_id, first_name FROM students JOIN student_classes ON students.student_id = student_classes.student_id WHERE student_classes.class_id='{}'".format(class_id))
 		return self.cursor.fetchall()
+
 		
 	
 	def returnStudentsFromTeacher(self, teacher_id):
 		# return all students in specific class
 		self.cursor.execute(r"SELECT students.student_id, students.first_name, students.last_name, student_classes.class_id FROM students JOIN student_classes ON students.student_id = student_classes.student_id JOIN classes ON student_classes.class_id = classes.class_id WHERE classes.teacher_id = '{}';".format(teacher_id))
 		return self.cursor.fetchall()
+
+	def addAssignmentToStudent(self, class_id, assignment_name):
+		confirmExecute = self.updateConnection.cursor()
+		for i in self.returnStudentsInClass(class_id['class_id']):
+			print(i['student_id'])
+			confirmExecute.execute(r"INSERT INTO student_assignments (student_id, assignment_id, grade) VALUES ('{}', (SELECT assignment_id FROM assignments WHERE assignment_name = '{}'), 0);".format(i['student_id'], assignment_name))
+			self.updateConnection.commit()
+			print('success??/')
+
+		return None
+
+
 
 	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
 		# Add assignment logic, apply to all students in class
@@ -90,7 +103,9 @@ class teacherFunctions:
 		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date) SELECT MAX(assignment_id) + 1, '{}', '{}', '{}' FROM assignments;".format(class_id['class_id'], assignment_name, due_date))
 		self.updateConnection.commit()
 
-	
+		self.addAssignmentToStudent(class_id, assignment_name)
+
+
 		return None
 
 

@@ -16,7 +16,7 @@
   <tbody>
     <tr>
       {%for k in range(0, bb)%}
-        {%if data1[i]['class_id'] == data[i]['class_id']%}
+        {%if data1[k]['class_id'] == data[i]['class_id']%}
           <td class="tg-0lax"><a href="{{url_for('view_assignments_from_teacher', student_id = data1[k]['student_id'], class_id=data1[k]['class_id'])}}">{{data1[k]['first_name']}} </a></tr>
         {%endif%}
       {%endfor%}
