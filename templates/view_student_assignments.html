@@ -7,12 +7,13 @@
 <h2> Assignments </h2>
 
 
-
+{%if amount > 0%}
 <table class="student-table">
 <thead>
   <tr>
     <th bgcolor='#CA0000 '><b>Assignment Name</b></th>
     <th bgcolor='#CA0000 '><b>Due Date</b></th>
+    <th bgcolor='#CA0000 '><b>Status</b></th>
     <th bgcolor='#CA0000 '><b>Grade</b></th>
   </tr>
 </thead>
@@ -21,13 +22,16 @@
   <tr>
     <td class="tg-0lax">{{account[i]['assignment_name']}}</td>
     <td class="tg-0lax">{{account[i]['due_date']}}</td>
+    <td class="tg-0lax">{{account[i]['status']}}</td>
     <td class="tg-0lax">{{account[i]['grade']}}</td>
   </tr>
   {%endfor%}
 </tbody>
 </table>
-
-
+{%endif%}
+{%if account == 0%}
+<p>You have no current assignments</p>
+{%endif%}
 
 <!-- <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}

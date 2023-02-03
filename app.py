@@ -71,6 +71,7 @@ def teacher_login():
 		account = cursor.fetchone()
 		if account:
 			session['loggedin'] = True
+			session['teacher_id'] = account['teacher_id']
 			return redirect(url_for('teacher_home'))
 
 
@@ -93,14 +94,12 @@ def view_student_assignments():
 def teacher_home():
 	from userFunctions import teacherFunctions
 	if 'loggedin' in session:
-		teacher_id = session.get("current_id", None)
+		teacher_id = session.get("teacher_id", None)
 		re = teacherFunctions()
 		data= re.returnAllClasses(teacher_id)
 		data1 = re.returnStudentsFromTeacher(teacher_id)
 		aa = len(data)
 		bb = len(data1)
-		print(data[0]['class_id'])
-		print(data1)
 		return render_template('teacher_home.html', data=data, data1=data1, aa=aa, bb=bb)
 	#return render_template("teacher_home.html")
 	else:
@@ -110,7 +109,7 @@ def teacher_home():
 def add_assignment():
 	from userFunctions import teacherFunctions
 	re = teacherFunctions()
-	teacher_id = session.get('current_id', None)
+	teacher_id = session.get('teacher_id', None)
 	amount = len(re.returnAllClasses(teacher_id))
 	return render_template('add_assignment.html', account=re.returnAllClasses(teacher_id), amount = amount)
 
@@ -153,5 +152,6 @@ def logout():
 	session.pop('loggedin', None)
 	return redirect(url_for('login'))
 
-
-
+@app.route('/seeAssignmentsFromClass')
+def seeAssignmentsFromClass():
+	return render_template("seeAssignmentsFromClass.html")
