@@ -5,29 +5,43 @@
 {% block content %}
 <h2>Home Page</h2>
 
-
+{%for k in range(len1)%}
 <table class="student-table">
     <thead>
-      <tr>
-        <th bgcolor='#CA0000 '><b>Assignment name</b></th>
-        <th bgcolor='#CA0000 '><b>Due Date</b></th>
-        <th bgcolor='#CA0000 '><b>Assignment Type</b></th>
-
-      </tr>
+    <tr>
+        <th bgcolor='#CA0000 '><b>{{classes[k]['class_name']}}</b></th>
+    </tr>
     </thead>
     <tbody>
-      {%for i in range(0, amount)%}
-      <tr>
-        <td class="tg-0lax">{{data[i]["assignment_name"]}}</td>
-        <td class="tg-0lax">{{data[i]["due_date"]}}</td>
-        <td class="tg-0lax">{{data[i]["assignment_type"]}}</td>
-      </tr>
-      {%endfor%}
+    <table class="student-table">
+        <thead>
+        <tr>
+            <th bgcolor='#CA0000 '><b>Assignment name</b></th>
+            <th bgcolor='#CA0000 '><b>Due Date</b></th>
+            <th bgcolor='#CA0000 '><b>Assignment Type</b></th>
+        </tr>
+        </thead>
+        <tbody>
+            {%for i in range(0, amount)%}
+                {%if data[i]['class_id'] == classes[k]['class_id']%}
+                <tr>
+                <td class="tg-0lax">{{data[i]["assignment_name"]}}</td>
+                <td class="tg-0lax">{{data[i]["due_date"]}}</td>
+                <td class="tg-0lax">{{data[i]["assignment_type"]}}</td>
+                </tr>
+                {%endif%}
+            {%endfor%}
+          </tbody>
+        </table>
     </tbody>
     </table>
 
-<style type="text/css">
 
+{%endfor%}
+
+ 
+
+    <style type="text/css">
 
 .bordered-tab-contents > .tab-content > .tab-pane {
     border-left: 1px solid #ddd;

@@ -163,8 +163,18 @@ def seeAssignmentsFromClass():
 	re = teacherFunctions()
 	teacher_id = session.get('teacher_id', None)
 	assignments = re.returnAssignmentsFromteacher(teacher_id)
-	data = assignments[0]
+	classes = re.returnAllClasses(teacher_id)
+	len1 = len(classes)
+#	print(data)
+#	print(classes[1])
 	aa = 0 
+	data = assignments
 	for i in data:
 		aa += 1
-	return render_template("seeAssignmentsFromClass.html",amount =aa, data=data) 
+
+	print(data)
+
+
+	
+
+	return render_template("seeAssignmentsFromClass.html",amount =aa, data=data, classes=classes, len1=len1) 

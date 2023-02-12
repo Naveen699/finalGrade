@@ -101,11 +101,12 @@ class teacherFunctions:
 
 	def returnAssignmentsFromteacher(self, teacher_id):
 		out = []
-		self.cursor.execute(r"SELECT classes.class_id FROM classes WHERE teacher_id = '{}'".format(teacher_id))
+		self.cursor.execute(r"SELECT a.*FROM assignments a JOIN classes c ON a.class_id = c.class_id JOIN teachers t ON c.teacher_id = t.teacher_id WHERE t.teacher_id = '{}';".format(teacher_id))
+		"""
 		for i in self.cursor.fetchall():
 			out.append(self.returnAssignmentsFromClass(i['class_id']))
-
-		return out
+		"""
+		return self.cursor.fetchall()
 	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
 		# Add assignment logic, apply to all students in class
 		class_id = self.returnIdFromName(class_name)
