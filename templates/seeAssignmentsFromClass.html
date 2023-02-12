@@ -4,10 +4,27 @@
 
 {% block content %}
 <h2>Home Page</h2>
-<p>list of assignments </p>
 
 
+<table class="student-table">
+    <thead>
+      <tr>
+        <th bgcolor='#CA0000 '><b>Assignment name</b></th>
+        <th bgcolor='#CA0000 '><b>Due Date</b></th>
+        <th bgcolor='#CA0000 '><b>Assignment Type</b></th>
 
+      </tr>
+    </thead>
+    <tbody>
+      {%for i in range(0, amount)%}
+      <tr>
+        <td class="tg-0lax">{{data[i]["assignment_name"]}}</td>
+        <td class="tg-0lax">{{data[i]["due_date"]}}</td>
+        <td class="tg-0lax">{{data[i]["assignment_type"]}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+    </table>
 
 <style type="text/css">
 

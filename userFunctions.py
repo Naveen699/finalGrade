@@ -93,9 +93,19 @@ class teacherFunctions:
 			print('success??/')
 
 		return None
+	
+	def returnAssignmentsFromClass(self, class_id):
+		self.cursor.execute(r"SELECT assignments.* FROM assignments WHERE class_id = '{}'".format(class_id))
+		return self.cursor.fetchall()
 
 
+	def returnAssignmentsFromteacher(self, teacher_id):
+		out = []
+		self.cursor.execute(r"SELECT classes.class_id FROM classes WHERE teacher_id = '{}'".format(teacher_id))
+		for i in self.cursor.fetchall():
+			out.append(self.returnAssignmentsFromClass(i['class_id']))
 
+		return out
 	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
 		# Add assignment logic, apply to all students in class
 		class_id = self.returnIdFromName(class_name)

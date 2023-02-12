@@ -41,7 +41,10 @@ def login():
 
 @app.route("/testRoute")
 def testRoute():
-	return "yes"
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+	assignments = re.returnAssignmentsFromteacher(1)
+	return str(assignments[0][0])
 
 
 @app.route('/student_home')
@@ -146,12 +149,22 @@ def view_assignments_from_teacher():
 	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount)
 
 	return 'success' 
+
 @app.route('/logout')
 def logout():
 	session.pop('name', None)
 	session.pop('loggedin', None)
 	return redirect(url_for('login'))
 
+
 @app.route('/seeAssignmentsFromClass')
 def seeAssignmentsFromClass():
-	return render_template("seeAssignmentsFromClass.html")
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+	teacher_id = session.get('teacher_id', None)
+	assignments = re.returnAssignmentsFromteacher(teacher_id)
+	data = assignments[0]
+	aa = 0 
+	for i in data:
+		aa += 1
+	return render_template("seeAssignmentsFromClass.html",amount =aa, data=data) 
