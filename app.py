@@ -126,7 +126,7 @@ def sumbitAddedAssignment():
 	class_id = re.returnIdFromName(classChoice)
 	re.addAssignment(classChoice, assignment_name, due_date, class_id['class_id'])
 
-	return str(classChoice)
+	return redirect(url_for('teacher_home'))
 
 @app.route('/profile')
 def profile():
@@ -155,6 +155,15 @@ def logout():
 	session.pop('name', None)
 	session.pop('loggedin', None)
 	return redirect(url_for('login'))
+
+@app.route('/delete_assignment')
+def delete_assignment():
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+	data = request.args.get('data', None)
+	print(data)
+#	re.deleteAssignment(data[0]['assignment_name'])
+	return data
 
 
 @app.route('/seeAssignmentsFromClass')

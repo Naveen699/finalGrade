@@ -66,6 +66,12 @@ class teacherFunctions:
 	def returnIdFromName(self, class_name):
 		self.cursor.execute(r"SELECT class_id FROM classes WHERE class_name='{}'".format(class_name))
 		return self.cursor.fetchone()
+	
+	def deleteAssignment(self, assignment_name):
+		confirmExecute = self.updateConnection.cursor()
+		confirmExecute.execute(r"".format(assignment_name))
+		self.updateConnection.commit()
+		return None
 
 	def returnNameFromId(self, class_id):
 		self.cursor.execute(r"SELECT class_name FROM classes WHERE class_id='{}'".format(class_id))
@@ -111,7 +117,7 @@ class teacherFunctions:
 		# Add assignment logic, apply to all students in class
 		class_id = self.returnIdFromName(class_name)
 		confirmExecute = self.updateConnection.cursor()
-		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date) SELECT MAX(assignment_id) + 1, '{}', '{}', '{}' FROM assignments;".format(class_id['class_id'], assignment_name, due_date))
+		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date) SELECT MAX(assignment_id) + 1, '{}', '{}', {} FROM assignments;".format(class_id['class_id'], assignment_name, due_date))
 		self.updateConnection.commit()
 
 		self.addAssignmentToStudent(class_id, assignment_name)
