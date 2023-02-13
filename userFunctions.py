@@ -69,7 +69,8 @@ class teacherFunctions:
 	
 	def deleteAssignment(self, assignment_name):
 		confirmExecute = self.updateConnection.cursor()
-		confirmExecute.execute(r"".format(assignment_name))
+		confirmExecute.execute(r"DELETE sa FROM student_assignments sa JOIN assignments a ON a.assignment_id = sa.assignment_id WHERE a.assignment_name = '{}'; ".format(assignment_name))
+		confirmExecute.execute(r"DELETE a FROM assignments a WHERE a.assignment_name = '{}';".format(assignment_name))
 		self.updateConnection.commit()
 		return None
 

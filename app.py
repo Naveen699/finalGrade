@@ -156,14 +156,13 @@ def logout():
 	session.pop('loggedin', None)
 	return redirect(url_for('login'))
 
-@app.route('/delete_assignment')
+@app.route('/delete_assignment', methods=['GET', 'POST'])
 def delete_assignment():
 	from userFunctions import teacherFunctions
 	re = teacherFunctions()
-	data = request.args.get('data', None)
-	print(data)
-#	re.deleteAssignment(data[0]['assignment_name'])
-	return data
+	assignment_name = request.args.get('class_name', None)
+	re.deleteAssignment(assignment_name)
+	return redirect(url_for('seeAssignmentsFromClass'))
 
 
 @app.route('/seeAssignmentsFromClass')
