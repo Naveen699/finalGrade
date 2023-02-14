@@ -70,7 +70,14 @@ class teacherFunctions:
 	def deleteAssignment(self, assignment_name):
 		confirmExecute = self.updateConnection.cursor()
 		confirmExecute.execute(r"DELETE sa FROM student_assignments sa JOIN assignments a ON a.assignment_id = sa.assignment_id WHERE a.assignment_name = '{}'; ".format(assignment_name))
+		self.updateConnection.commit()
 		confirmExecute.execute(r"DELETE a FROM assignments a WHERE a.assignment_name = '{}';".format(assignment_name))
+		self.updateConnection.commit()
+		return None
+
+	def deleteSingularAssignment(self, assignment_id, student_id):
+		confirmExecute = self.updateConnection.cursor()
+		confirmExecute.execute(r"DELETE sa from student_assignments sa WHERE sa.assignment_id = '{}' AND sa.student_id = '{}';".format(assignment_id, student_id))
 		self.updateConnection.commit()
 		return None
 
@@ -125,6 +132,11 @@ class teacherFunctions:
 
 
 		return None
+	
+
+	def returnAssignmentID(self, assignment_name):
+		self.cursor.execute(r"SELECT assignment_id FROM assignments WHERE assignment_name = '{}'".format(assignment_name))
+		return self.cursor.fetchone()
 
 
 

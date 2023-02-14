@@ -4,7 +4,25 @@
 
 {% block content %}
 <h2>Home Page</h2>
-<p>Add Assignment </p>
+<h3>Add assignment to class</h3>
+
+<div style="border: 1px solid black; padding: 10px;">
+  <form action="/sumbitAddedAssignment" method="post">
+    <select name="selected_value">
+      {%for i in range(0, amount)%}
+      <option value="{{account[i]['class_name']}}">{{account[i]['class_name']}}</option>
+      {%endfor%}
+    </select>
+    <br><br>
+    <input type="text" name="assignmentName" placeholder="Assignment Name">
+    <br><br>
+    <input type="text" name="dueDate" placeholder="Due Date">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<h3>Add assignment to student</h3>
 
 <div style="border: 1px solid black; padding: 10px;">
   <form action="/sumbitAddedAssignment" method="post">

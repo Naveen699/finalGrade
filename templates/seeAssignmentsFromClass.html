@@ -13,6 +13,7 @@
     </tr>
     </thead>
     <tbody>
+    {%if amount > 0%}
     <table class="student-table">
         <thead>
         <tr>
@@ -35,8 +36,12 @@
             {%endfor%}
           </tbody>
         </table>
+    {%endif%}
+    
+
     </tbody>
     </table>
+
     <!--<a href="{{ url_for('add_assignment') }}"><i></i>+</a> -->
 
 

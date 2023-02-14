@@ -1,22 +1,11 @@
 TODO:
-	- Fully implement reusability
-	- Create points system for assignments
-	- Teacher View 
-	- Teacher assign to students
-	- Overdue assignments
-	- Teacher Class in userFunctions
-	- Teacher display
-		- Students
-		- Assignments
-		- Classes
-	- Maintain app (log, app, dyne monitoring)
-	
-Working
-	- Teacher View
-	- Building Teacher SQL queries
-
-
-
+	- Edit grades	
+	- Add assignment to student
+	- Remove assignment for student
+	- Teacher / student profile formatting
+	- Variable / function name rework
+	- Edit grade for student?
+	- Point system
 
 DONE:
 	- Class Grade calculated
@@ -25,3 +14,5 @@ DONE:
 	- Student login
 	- Assignments displayed
 	- Teacher Login
+	- Remove assignment
+	- Add assignment

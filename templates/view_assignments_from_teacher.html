@@ -7,10 +7,11 @@
 <h2> Assignments </h2>
 
 
-
+{%if amount > 0%}
 <table class="student-table">
 <thead>
   <tr>
+    <th bgcolor='#CA0000 '><b></b></th>
     <th bgcolor='#CA0000 '><b>Assignment Name</b></th>
     <th bgcolor='#CA0000 '><b>Due Date</b></th>
     <th bgcolor='#CA0000 '><b>Grade</b></th>
@@ -19,6 +20,7 @@
 <tbody>
   {%for i in range(0, amount)%}
   <tr>
+    <td class="tg-0lax"><a href="{{url_for('delete_assignment_from_student', class_name=account[i]['assignment_name'], student_id=student_id, asssignment_name=account[i]['assignment_name'])}}">-</a></td> 
     <td class="tg-0lax">{{account[i]['assignment_name']}}</td>
     <td class="tg-0lax">{{account[i]['due_date']}}</td>
     <td class="tg-0lax">{{account[i]['grade']}}</td>
@@ -26,7 +28,10 @@
   {%endfor%}
 </tbody>
 </table>
-
+{%endif%}
+{%if amount == 0%}
+  <p>This student has no assignments</p>
+{%endif%}
 
 
 <!-- <style type="text/css">

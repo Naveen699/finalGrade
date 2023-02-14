@@ -122,7 +122,7 @@ def sumbitAddedAssignment():
 	re = teacherFunctions()
 	classChoice = request.form['selected_value']
 	assignment_name = request.form['assignmentName']
-	due_date = request.form['dueDate']
+	due_date = str(request.form['dueDate'])
 	class_id = re.returnIdFromName(classChoice)
 	re.addAssignment(classChoice, assignment_name, due_date, class_id['class_id'])
 
@@ -146,7 +146,7 @@ def view_assignments_from_teacher():
 	
 	classD = de.findUserAssignments(student_id, class_name)
 	amount = len(classD)
-	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount)
+	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount, student_id=student_id)
 
 	return 'success' 
 
@@ -155,6 +155,36 @@ def logout():
 	session.pop('name', None)
 	session.pop('loggedin', None)
 	return redirect(url_for('login'))
+
+@app.route('/delete_assignment_from_student', methods=['GET', 'POST'])
+def delete_assignment_from_student():
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+
+	
+	assignment_name = request.args.get('class_name', None)
+	student_id = request.args.get('student_id', None)
+	assignment_id = re.returnAssignmentID(assignment_name)['assignment_id']
+
+	
+	print("assignment id: ", assignment_id)
+	print("student id: ", student_id)
+
+
+
+	re.deleteSingularAssignment(assignment_id, student_id)
+
+	"""
+	print(assignment_name)
+	print(student_id)
+	print(assignment_id)
+	"""
+	
+
+	return redirect(url_for('teacher_home'))
+
+
+
 
 @app.route('/delete_assignment', methods=['GET', 'POST'])
 def delete_assignment():
