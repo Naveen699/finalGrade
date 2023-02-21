@@ -20,10 +20,10 @@
 <tbody>
   {%for i in range(0, amount)%}
   <tr>
-    <td class="tg-0lax"><a href="{{url_for('delete_assignment_from_student', class_name=account[i]['assignment_name'], student_id=student_id, asssignment_name=account[i]['assignment_name'])}}">-</a></td> 
+    <td class="tg-0lax"><a href="{{url_for('delete_assignment_from_student', class_name=account[i]['assignment_name'], student_id=student_id)}}">-</a></td> 
     <td class="tg-0lax">{{account[i]['assignment_name']}}</td>
     <td class="tg-0lax">{{account[i]['due_date']}}</td>
-    <td class="tg-0lax">{{account[i]['grade']}}</td>
+    <td class="tg-0lax" id="grade-{{ i }}" ondblclick="makeEditable(this)">{{ account[i]['grade'] }}</td>
   </tr>
   {%endfor%}
 </tbody>
@@ -33,6 +33,37 @@
   <p>This student has no assignments</p>
 {%endif%}
 
+
+<script>
+  function makeEditable(cell) {
+    var grade = cell.innerText;
+    cell.innerHTML = "<input type='text' value='" + grade + "' onblur='updateGrade(this)' />";
+  }
+  
+  function updateGrade(input) {
+  var grade = input.value;
+  var row = input.parentNode.parentNode;
+  var index = row.rowIndex - 1;
+  var assignmentName = row.cells[1].innerText;
+  var studentId = "{{ student_id }}";
+
+  fetch("/update_grade", {
+    method: "POST",
+    body: JSON.stringify({
+      assignmentName: assignmentName,
+      studentId: studentId,
+      grade: grade
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(function(response) {
+    if (response.ok) {
+      row.cells[3].innerHTML = grade;
+    }
+  });
+}
+</script>
 
 <!-- <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}

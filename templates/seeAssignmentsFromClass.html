@@ -6,6 +6,9 @@
 <h2>Home Page</h2>
 
 {%for k in range(len1)%}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
 <table class="student-table">
     <thead>
     <tr>
@@ -27,7 +30,7 @@
             {%for i in range(0, amount)%}
                 {%if data[i]['class_id'] == classes[k]['class_id']%}
                 <tr>
-                <td class="tg-0lax"><a href="{{url_for('delete_assignment', class_name=data[i]['assignment_name'])}}">-</a></td>
+                <td class="tg-0lax"><a href="{{url_for('delete_assignment', class_name=data[i]['assignment_name'])}}">x</a></td>
                 <td class="tg-0lax">{{data[i]["assignment_name"]}}</td>
                 <td class="tg-0lax">{{data[i]["due_date"]}}</td>
                 <td class="tg-0lax">{{data[i]["assignment_type"]}}</td>

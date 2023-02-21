@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, jsonify
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 
@@ -123,10 +123,28 @@ def sumbitAddedAssignment():
 	classChoice = request.form['selected_value']
 	assignment_name = request.form['assignmentName']
 	due_date = str(request.form['dueDate'])
+	points_avail = request.form['points_avail']
 	class_id = re.returnIdFromName(classChoice)
-	re.addAssignment(classChoice, assignment_name, due_date, class_id['class_id'])
+	re.addAssignment(classChoice, assignment_name, due_date, class_id['class_id'], points_avail=points_avail)
 
 	return redirect(url_for('teacher_home'))
+
+
+@app.route('/update_grade', methods=['POST'])
+def update_grade():
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+	data = request.get_json()
+	student_id = data['studentId']
+	assignment_name = data['assignmentName']
+	grade = data["grade"]
+
+	re.updateGrade(assignment_name, student_id, grade)
+
+	return redirect(url_for('view_assignments_from_teacher')) 
+
+
+
 
 @app.route('/profile')
 def profile():

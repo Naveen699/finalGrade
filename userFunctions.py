@@ -13,8 +13,11 @@ class studentFunctions:
 		return self.cursor.fetchall()
 
 	def findUserAssignments(self, student_id, class_name):
-		self.cursor.execute(r"SELECT assignments.assignment_name, assignments.due_date, student_assignments.grade FROM assignments JOIN student_assignments ON assignments.assignment_id = student_assignments.assignment_id JOIN classes ON assignments.class_id = classes.class_id WHERE classes.class_name = '{}' AND student_assignments.student_id = '{}';".format(class_name, student_id))
+		self.cursor.execute(r"SELECT assignments.assignment_name, assignments.due_date, student_assignments.grade, student_assignments.points_avail, student_assignments.points_earned, student_assignments.status FROM assignments JOIN student_assignments ON assignments.assignment_id = student_assignments.assignment_id JOIN classes ON assignments.class_id = classes.class_id WHERE classes.class_name = '{}' AND student_assignments.student_id = '{}';".format(class_name, student_id))
 		return self.cursor.fetchall()
+	
+	def calculateAssignmentGrade(self, data):
+		return None
 
 	def returnClassId(self, class_name):
 		self.cursor.execute(r"SELECT class_id FROM classes WHERE class_name='{}'".format(class_name))
@@ -91,7 +94,12 @@ class teacherFunctions:
 		self.cursor.execute("SELECT students.student_id, first_name FROM students JOIN student_classes ON students.student_id = student_classes.student_id WHERE student_classes.class_id='{}'".format(class_id))
 		return self.cursor.fetchall()
 
-		
+	def updateGrade(self, assignment_name, student_id, grade):
+		confirmExecute = self.updateConnection.cursor()
+		assignment_id =  self.returnAssignmentID(assignment_name)['assignment_id']	
+		confirmExecute.execute(r"UPDATE student_assignments SET grade = '{}' WHERE student_id = '{}' AND assignment_id = '{}'".format(grade, student_id, assignment_id))
+		self.updateConnection.commit()
+		return None
 	
 	def returnStudentsFromTeacher(self, teacher_id):
 		# return all students in specific class
@@ -102,7 +110,7 @@ class teacherFunctions:
 		confirmExecute = self.updateConnection.cursor()
 		for i in self.returnStudentsInClass(class_id['class_id']):
 			print(i['student_id'])
-			confirmExecute.execute(r"INSERT INTO student_assignments (student_id, assignment_id, grade) VALUES ('{}', (SELECT assignment_id FROM assignments WHERE assignment_name = '{}'), 0);".format(i['student_id'], assignment_name))
+			confirmExecute.execute(r"INSERT INTO student_assignments (student_id, assignment_id, grade, points_avail) VALUES ('{}', (SELECT assignment_id FROM assignments WHERE assignment_name = '{}'), 0, (SELECT points_avail FROM assignments WHERE assignment_name= '{}'));".format(i['student_id'], assignment_name, assignment_name))
 			self.updateConnection.commit()
 			print('success??/')
 
@@ -121,11 +129,11 @@ class teacherFunctions:
 			out.append(self.returnAssignmentsFromClass(i['class_id']))
 		"""
 		return self.cursor.fetchall()
-	def addAssignment(self, class_name,  assignment_name, due_date, class_id):
+	def addAssignment(self, class_name,  assignment_name, due_date, class_id, points_avail):
 		# Add assignment logic, apply to all students in class
 		class_id = self.returnIdFromName(class_name)
 		confirmExecute = self.updateConnection.cursor()
-		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date) SELECT MAX(assignment_id) + 1, '{}', '{}', {} FROM assignments;".format(class_id['class_id'], assignment_name, due_date))
+		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date, points_avail) SELECT MAX(assignment_id) + 1, '{}', '{}', {}, '{}' FROM assignments;".format(class_id['class_id'], assignment_name, due_date, points_avail))
 		self.updateConnection.commit()
 
 		self.addAssignmentToStudent(class_id, assignment_name)
