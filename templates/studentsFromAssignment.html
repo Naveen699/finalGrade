@@ -9,6 +9,8 @@
         <thead>
           <tr>
             <th bgcolor='#CA0000 '><b>Name</b></th>
+            <th bgcolor='#CA0000 '><b>Points Earned</b></th>
+            <th bgcolor='#CA0000 '><b>Points Available</b></th>
             <th bgcolor='#CA0000 '><b>Grade</th>
           </tr>
         </thead>
@@ -20,10 +22,12 @@
               <form method="POST" action="{{ url_for('update_grade_second') }}">
                 <input type="hidden" name="student_id" value="{{ student['student_id'] }}">
                 <input type="hidden" name="assignment_name" value="{{ student['assignment_name'] }}">
-                <input type="number" step="0.001" name="grade" value="{{ student['grade'] }}">
+                <input type="number" step="0.001" name="grade" value="{{ student['points_earned'] }}">
                 <button type="submit">Save</button>
               </form>
             </td>
+            <td class="tg-0lax">{{ student['points_avail'] }}</td>
+            <td class="tg-0lax">{{ student['grade'] }}</td>
           </tr>
           {% endfor %}
         </tbody>

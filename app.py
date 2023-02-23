@@ -89,6 +89,7 @@ def view_student_assignments():
 		re = studentFunctions()
 		account = re.findUserAssignments(student_id, class_name)
 		amount = len(account)
+		print(re.updateAssignmentGrade(student_id))
 		return render_template('view_student_assignments.html', account=account, amount=amount)
 	else:
 		return url_for('login')
@@ -143,15 +144,15 @@ def studentsFromAssignment():
 
 @app.route("/update_grade_second", methods=['GET', 'POST'])
 def update_grade_second():
-	from userFunctions import teacherFunctions
+	from userFunctions import teacherFunctions, studentFunctions
 	re = teacherFunctions()
+	aa = studentFunctions()
 	student_id = request.form['student_id']
 	grade = request.form['grade']
 	assignment_name = request.form['assignment_name']
 	print(f"Student ID: {student_id}, Updated Grade: {grade}, Assignment Name: {assignment_name}")	
 	re.updateGrade(assignment_name, student_id, grade)
-	#print(f"Student Id: {student_id}\n Assignment name: {assignment_name}\n Grade: {grade}")
-
+	aa.updateAssignmentGrade(student_id)
 	return redirect(url_for('studentsFromAssignment', assignment_name=assignment_name))
 
 
@@ -164,9 +165,9 @@ def update_grade():
 	data = request.get_json()
 	student_id = data['studentId']
 	assignment_name = data['assignmentName']
-	grade = data["grade"]
+	points = data["grade"]
 
-	re.updateGrade(assignment_name, student_id, grade)
+	re.updateGrade(assignment_name, student_id, points)
 
 	return redirect(url_for('view_assignments_from_teacher')) 
 

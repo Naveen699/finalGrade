@@ -55,6 +55,20 @@ class studentFunctions:
 
 			#Resets Average
 			avg = 0
+	
+	def updateAssignmentGrade(self, student_id):
+		confirmExecute = self.updateConnection.cursor()
+		self.cursor.execute(f"SELECT points_earned, points_avail, assignment_id FROM student_assignments WHERE student_id = '{student_id}'")
+		data = self.cursor.fetchall()
+		newGrade = 0
+		for i in range(len(data)):
+			if type(data[i]['points_earned']) is int:
+				newGrade = (data[i]['points_earned'] / data[i]['points_avail']) * 100
+				print(newGrade)
+				confirmExecute.execute(f"UPDATE student_assignments SET grade = '{newGrade}' WHERE student_id = '{student_id}' AND assignment_id = '{data[i]['assignment_id']}'")
+				self.updateConnection.commit()
+
+		return None
 
 class teacherFunctions:
 	def __init__(self):
@@ -94,10 +108,10 @@ class teacherFunctions:
 		self.cursor.execute("SELECT students.student_id, first_name FROM students JOIN student_classes ON students.student_id = student_classes.student_id WHERE student_classes.class_id='{}'".format(class_id))
 		return self.cursor.fetchall()
 
-	def updateGrade(self, assignment_name, student_id, grade):
+	def updateGrade(self, assignment_name, student_id, points):
 		confirmExecute = self.updateConnection.cursor()
 		assignment_id =  self.returnAssignmentID(assignment_name)['assignment_id']	
-		confirmExecute.execute(r"UPDATE student_assignments SET grade = '{}' WHERE student_id = '{}' AND assignment_id = '{}'".format(grade, student_id, assignment_id))
+		confirmExecute.execute(r"UPDATE student_assignments SET points_earned = '{}' WHERE student_id = '{}' AND assignment_id = '{}'".format(points, student_id, assignment_id))
 		self.updateConnection.commit()
 		return None
 	
