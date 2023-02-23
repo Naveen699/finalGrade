@@ -64,7 +64,6 @@ class studentFunctions:
 		for i in range(len(data)):
 			if type(data[i]['points_earned']) is int:
 				newGrade = (data[i]['points_earned'] / data[i]['points_avail']) * 100
-				print(newGrade)
 				confirmExecute.execute(f"UPDATE student_assignments SET grade = '{newGrade}' WHERE student_id = '{student_id}' AND assignment_id = '{data[i]['assignment_id']}'")
 				self.updateConnection.commit()
 

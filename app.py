@@ -134,7 +134,7 @@ def sumbitAddedAssignment():
 
 @app.route('/studentsFromAssignment')
 def studentsFromAssignment():
-	from userFunctions import teacherFunctions
+	from userFunctions import teacherFunctions, studentFunctions
 	re = teacherFunctions()
 	assignment_name = request.args.get('assignment_name', None)
 	data = re.returnStudentsFromAssignment(assignment_name)
@@ -160,14 +160,16 @@ def update_grade_second():
 
 @app.route('/update_grade', methods=['POST'])
 def update_grade():
-	from userFunctions import teacherFunctions
+	from userFunctions import teacherFunctions, studentFunctions
 	re = teacherFunctions()
+	aa = studentFunctions()
 	data = request.get_json()
 	student_id = data['studentId']
 	assignment_name = data['assignmentName']
 	points = data["grade"]
 
 	re.updateGrade(assignment_name, student_id, points)
+	aa.updateAssignmentGrade(student_id)
 
 	return redirect(url_for('view_assignments_from_teacher')) 
 
@@ -191,6 +193,7 @@ def view_assignments_from_teacher():
 	class_name = str(class_name['class_name'])
 	
 	classD = de.findUserAssignments(student_id, class_name)
+	de.updateAssignmentGrade(student_id)
 	amount = len(classD)
 	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount, student_id=student_id)
 
