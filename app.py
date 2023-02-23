@@ -130,6 +130,33 @@ def sumbitAddedAssignment():
 	return redirect(url_for('teacher_home'))
 
 
+
+@app.route('/studentsFromAssignment')
+def studentsFromAssignment():
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+	assignment_name = request.args.get('assignment_name', None)
+	data = re.returnStudentsFromAssignment(assignment_name)
+#		print(f"Student Id: {i['student_id']}\nGrade: {i['grade']}\n")
+	return render_template('studentsFromAssignment.html', data=data, length=len(data))
+
+
+@app.route("/update_grade_second", methods=['GET', 'POST'])
+def update_grade_second():
+	from userFunctions import teacherFunctions
+	re = teacherFunctions()
+	student_id = request.form['student_id']
+	grade = request.form['grade']
+	assignment_name = request.form['assignment_name']
+	print(f"Student ID: {student_id}, Updated Grade: {grade}, Assignment Name: {assignment_name}")	
+	re.updateGrade(assignment_name, student_id, grade)
+	#print(f"Student Id: {student_id}\n Assignment name: {assignment_name}\n Grade: {grade}")
+
+	return redirect(url_for('studentsFromAssignment', assignment_name=assignment_name))
+
+
+
+
 @app.route('/update_grade', methods=['POST'])
 def update_grade():
 	from userFunctions import teacherFunctions
@@ -183,13 +210,6 @@ def delete_assignment_from_student():
 	assignment_name = request.args.get('class_name', None)
 	student_id = request.args.get('student_id', None)
 	assignment_id = re.returnAssignmentID(assignment_name)['assignment_id']
-
-	
-	print("assignment id: ", assignment_id)
-	print("student id: ", student_id)
-
-
-
 	re.deleteSingularAssignment(assignment_id, student_id)
 
 	"""

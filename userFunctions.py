@@ -121,6 +121,11 @@ class teacherFunctions:
 		return self.cursor.fetchall()
 
 
+	def returnStudentsFromAssignment(self, assignment_name):
+		self.cursor.execute(r"SELECT * FROM students s JOIN student_assignments sa ON s.student_id = sa.student_id JOIN assignments a ON sa.assignment_id = a.assignment_id WHERE a.assignment_name = '{}'".format(assignment_name))
+		return self.cursor.fetchall()
+
+
 	def returnAssignmentsFromteacher(self, teacher_id):
 		out = []
 		self.cursor.execute(r"SELECT a.*FROM assignments a JOIN classes c ON a.class_id = c.class_id JOIN teachers t ON c.teacher_id = t.teacher_id WHERE t.teacher_id = '{}';".format(teacher_id))
