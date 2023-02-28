@@ -163,15 +163,27 @@ def update_grade():
 	from userFunctions import teacherFunctions, studentFunctions
 	re = teacherFunctions()
 	aa = studentFunctions()
+	"""
 	data = request.get_json()
 	student_id = data['studentId']
 	assignment_name = data['assignmentName']
 	points = data["grade"]
+	"""
+	student_id = request.form['student_id']
+	class_id = request.form['class_id']
+	points = request.form['grade']
+	assignment_name = request.form['assignment_name']
+	class_name = re.returnNameFromId(class_id)
+	class_name = str(class_name['class_name'])
+	print(class_name)
+	classD = aa.findUserAssignments(student_id, class_name)
+	print(f"student id: {student_id}\ngrade: {points}\nassignment name: {assignment_name}")
+	
 
 	re.updateGrade(assignment_name, student_id, points)
 	aa.updateAssignmentGrade(student_id)
 
-	return redirect(url_for('view_assignments_from_teacher')) 
+	return render_template("view_assignments_from_teacher.html", account=classD, amount=len(classD), student_id=student_id, class_id=class_id)
 
 
 
@@ -195,7 +207,7 @@ def view_assignments_from_teacher():
 	classD = de.findUserAssignments(student_id, class_name)
 	de.updateAssignmentGrade(student_id)
 	amount = len(classD)
-	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount, student_id=student_id)
+	return render_template("view_assignments_from_teacher.html", account=classD, amount=amount, student_id=student_id, class_id=class_id)
 
 	return 'success' 
 
