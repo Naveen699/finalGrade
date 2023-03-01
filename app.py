@@ -183,7 +183,7 @@ def update_grade():
 	re.updateGrade(assignment_name, student_id, points)
 	aa.updateAssignmentGrade(student_id)
 
-	return render_template("view_assignments_from_teacher.html", account=classD, amount=len(classD), student_id=student_id, class_id=class_id)
+	return redirect(url_for("view_assignments_from_teacher", account=classD, amount=len(classD), student_id=student_id, class_id=class_id))
 
 
 

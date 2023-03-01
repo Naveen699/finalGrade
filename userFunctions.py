@@ -151,7 +151,7 @@ class teacherFunctions:
 		# Add assignment logic, apply to all students in class
 		class_id = self.returnIdFromName(class_name)
 		confirmExecute = self.updateConnection.cursor()
-		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date, points_avail) SELECT MAX(assignment_id) + 1, '{}', '{}', {}, '{}' FROM assignments;".format(class_id['class_id'], assignment_name, due_date, points_avail))
+		confirmExecute.execute(r"INSERT INTO assignments (assignment_id, class_id, assignment_name, due_date, points_avail) SELECT MAX(assignment_id) + 1, '{}', '{}', '{}', '{}' FROM assignments;".format(class_id['class_id'], assignment_name, due_date, points_avail))
 		self.updateConnection.commit()
 
 		self.addAssignmentToStudent(class_id, assignment_name)
